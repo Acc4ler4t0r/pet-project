@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Создать новую задачу</h2>
+    <form action="http://192.168.13.13:8080/add_task/form_data" method="POST">
+
+      <label>Title (до 50 символов):
+        <input type="text" name="title" maxlength="50" required>
+      </label><br><br>
+
+      <label>Description (до 50 символов):
+        <input type="text" name="description" maxlength="50">
+      </label><br><br>
+
+      <label>Задача выполнена?
+        <input type="checkbox" name="is_completed" value="true">
+      </label><br><br>
+
+      <label>Выберите пользователя:
+        <select name="user_id" required>
+          <option value="" disabled selected>-- Выберите из списка --</option>
+
+          {% for user in users %}
+              {# Универсальная проверка: если это кортеж, берем по индексу, если словарь - по ключу #}
+              {% if user is mapping %}
+                  <option value="{{ user.id }}">{{ user.username }}</option>
+              {% else %}
+                  <option value="{{ user[0] }}">{{ user[1] }}</option>
+              {% endif %}
+          {% endfor %}
+
+        </select>
+      </label><br><br>
+
+      <button type="submit">Создать задачу</button>
+
+    </form>
+  </body>
+</html>
